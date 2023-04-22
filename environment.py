@@ -14,53 +14,53 @@ class Environment:
   def __init__(self):
     first_level = [
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': 'f'},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'dropoff', 'reward': +14, 'occupied_by': '', 'block_count': 0}
+        {'type': 'normal', 'occupied_by': 'f'},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'dropoff', 'occupied_by': '', 'block_count': 0}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'pickup', 'reward': +14, 'occupied_by': '', 'block_count': 10},
-        {'type': 'risky', 'reward': -2, 'occupied_by': ''}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'pickup', 'occupied_by': '', 'block_count': 10},
+        {'type': 'risky', 'occupied_by': ''}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''}
       ]
     ]
     second_level = [
       [
-        {'type': 'dropoff', 'reward': +14, 'occupied_by': '', 'block_count': 0},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''}
+        {'type': 'dropoff', 'occupied_by': '', 'block_count': 0},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'risky', 'reward': -2, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'risky', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'pickup', 'reward': +14, 'occupied_by': '', 'block_count': 10}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'pickup', 'occupied_by': '', 'block_count': 10}
       ]
     ]
     third_level = [
       [
-        {'type': 'dropoff', 'reward': +14, 'occupied_by': '', 'block_count': 0},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''}
+        {'type': 'dropoff', 'occupied_by': '', 'block_count': 0},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'dropoff', 'reward': +14, 'occupied_by': 'm', 'block_count': 0}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'dropoff', 'occupied_by': 'm', 'block_count': 0}
       ],
       [
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''},
-        {'type': 'normal', 'reward': -1, 'occupied_by': ''}
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''},
+        {'type': 'normal', 'occupied_by': ''}
       ]
     ]
     self.environment = [first_level, second_level, third_level]

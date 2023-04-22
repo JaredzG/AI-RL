@@ -67,6 +67,34 @@ def find_possible_actions(state, agent):
   
   return moves
 
+def find_next_position_possible_actions(coords):
+  moves = ['up', 'down', 'left', 'right', 'forward', 'backward']
+  if coords[0] == 0:
+    if moves.count('down'):
+      print('Removing down due to wall')
+      moves.remove('down')
+  elif coords[0] == 2:
+    if moves.count('up'):
+      print('Removing up due to wall')
+      moves.remove('up')
+  if coords[1] == 0:
+    if moves.count('forward'):
+      print('Removing forward due to wall')
+      moves.remove('forward')
+  elif coords[1] == 2:
+    if moves.count('backward'):
+      print('Removing backward due to wall')
+      moves.remove('backward')
+  if coords[2] == 0:
+    if moves.count('left'):
+      print('Removing left due to wall')
+      moves.remove('left')
+  elif coords[2] == 2:
+    if moves.count('right'):
+      print('Removing right due to wall')
+      moves.remove('right')
+  return moves
+
 # def main():
 #     moves = find_possible_actions({'male_position': [0, 1, 2], 'female_position': [1, 1, 2], 'male_carrying': False, 'female_carrying': False, 'pickup_cell_blocks': {}, 'dropoff_cell_blocks': {}}, 'm')
 #     print(moves)
