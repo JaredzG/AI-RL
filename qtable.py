@@ -7,7 +7,7 @@ class Qtable:
           'left': 3,
           'right': 8,
           'forward': 4,
-          'backwards': 7
+          'backward': 7
       },
       'risky': {
           'up': 0,
@@ -15,7 +15,7 @@ class Qtable:
           'left': 0,
           'right': 0,
           'forward': 0,
-          'backwards': 0
+          'backward': 0
       },
       'pickup': {
           'up': 0,
@@ -23,7 +23,7 @@ class Qtable:
           'left': 0,
           'right': 0,
           'forward': 0,
-          'backwards': 0
+          'backward': 0
       },
       'dropoff': {
         'up': 0,
@@ -31,7 +31,7 @@ class Qtable:
         'left': 0,
         'right': 0,
         'forward': 0,
-        'backwards': 0
+        'backward': 0
       }
     }
     
@@ -53,11 +53,11 @@ class Qtable:
 
     '''
 
-  def find_q_vals (self, state, moves):
+  def find_q_vals (self, position, moves):
     q_vals = {}
     for direction in moves:
-      q_vals[direction] = self.table[state][direction]
-      return q_vals
+      q_vals[direction] = self.table[position][direction]
+    return q_vals
 
 # def main():
 #     qtable = Qtable()

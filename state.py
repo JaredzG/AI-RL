@@ -3,7 +3,7 @@ import environment
 class State:
   def __init__(self, environment):
     self.environment = environment
-    self.representation = {'male_position': [], 'female_position': [], 'male_carrying': False, 'female_carrying': False, 'pickup_cell_blocks': {}, 'dropoff_cell_blocks': {}}
+    self.representation = {'male_position': {}, 'female_position': {}, 'male_carrying': False, 'female_carrying': False, 'pickup_cell_blocks': {}, 'dropoff_cell_blocks': {}}
     self.set_male_position()
     self.set_female_position()
     self.set_pickup_cells_blocks()
@@ -14,14 +14,16 @@ class State:
       for y in range(3):
         for z in range(3):
           if self.environment[x][y][z]['occupied_by'] == 'm':
-            self.representation['male_position'] = [x, y, z]
+            self.representation['male_position']['coords'] = [x, y, z]
+            self.representation['male_position']['cell_type'] = self.environment[x][y][z]['type']
             
   def set_female_position(self):
     for x in range(3):
       for y in range(3):
         for z in range(3):
           if self.environment[x][y][z]['occupied_by'] == 'f':
-            self.representation['female_position'] = [x, y, z]
+            self.representation['female_position']['coords'] = [x, y, z]
+            self.representation['female_position']['cell_type'] = self.environment[x][y][z]['type']
             
   def toggle_male_carrying(self):
     self.representation['male_carrying'] = not self.representation['male_carrying']
@@ -46,9 +48,9 @@ class State:
 def find_possible_cells(state, agent, actions):
   possible_cells = {}
   if agent == 'm':
-    possible_cells = environment.get_cell_types(state.environment, state.representation['male_position'], actions)
+    possible_cells = environment.get_cell_types(state.environment, state.representation['male_position']['coords'], actions)
   else:
-    possible_cells = environment.get_cell_types(state.environment, state.representation['female_position'], actions)
+    possible_cells = environment.get_cell_types(state.environment, state.representation['female_position']['coords'], actions)
   return possible_cells
 
 # def main():

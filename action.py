@@ -8,8 +8,8 @@ def find_possible_actions(state, agent):
   other_agent_pos = []
   
   if agent == 'm':
-    agent_pos = state.representation['male_position']
-    other_agent_pos = state.representation['female_position']
+    agent_pos = state.representation['male_position']['coords']
+    other_agent_pos = state.representation['female_position']['coords']
   else:
     agent_pos = state.representation['female_position']
     other_agent_pos = state.representation['male_position']
