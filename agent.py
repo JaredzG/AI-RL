@@ -1,6 +1,4 @@
-#Agent has various attributes:
-#Male or Female
-#Actions available to choose
+import action
 class Agent:
   def __init__(self, type, actions, carrying):
     self.type = type

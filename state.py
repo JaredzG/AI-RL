@@ -25,9 +25,6 @@ class State:
   def toggle_female_carrying(self):
     self.representation['female_carrying'] = not self.representation['female_carrying']
     
-  '''
-  Initially, the environment has pickup cells that are completely full. Later is when it changes.
-  '''
   def set_pickup_cells_blocks(self):
     for x in range(3):
       for y in range(3):
@@ -35,9 +32,6 @@ class State:
           if self.environment[x][y][z]['type'] is 'pickup':
             self.representation[(x, y, z)] = self.environment[x][y][z]['block_count']
  
-  '''
-  Initially, the environment has dropoff cells that are completely empty. Later is when it changes.
-  '''
   def set_dropoff_cell_blocks(self):
     for x in range(3):
       for y in range(3):
