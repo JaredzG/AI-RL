@@ -104,3 +104,29 @@ class Environment:
   def add_dropoff_block(self, coords):
     if(self.environment[coords[0]][coords[1]][coords[2]]['block_count'] < 5):
       self.environment[coords[0]][coords[1]][coords[2]]['block_count'] += 1
+      
+def get_cell_types(environment, initial_position, actions):
+  cells = {}
+  for action in actions:
+    match action:
+      case 'up':
+        cells[action] = environment[initial_position[0] + 1][initial_position[1]][initial_position[2]]['type']
+      case 'down':
+        cells[action] = environment[initial_position[0] - 1][initial_position[1]][initial_position[2]]['type']
+      case 'backward':
+        cells[action] = environment[initial_position[0]][initial_position[1] + 1][initial_position[2]]['type']
+      case 'forward':
+        cells[action] = environment[initial_position[0]][initial_position[1] - 1][initial_position[2]]['type']
+      case 'right':
+        cells[action] = environment[initial_position[0]][initial_position[1]][initial_position[2] + 1]['type']
+      case 'left':
+        cells[action] = environment[initial_position[0]][initial_position[1]][initial_position[2] - 1]['type']
+  return cells
+
+# def main():
+#     env = Environment()
+#     cells = get_cell_types(env, [0, 1, 1], ['up', 'left', 'right', 'forward', 'backward'])
+#     print(cells)
+
+# if __name__ == "__main__" :
+#     main();
