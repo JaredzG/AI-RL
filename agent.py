@@ -102,13 +102,13 @@ def main():
       future_carrying = determine_future_carrying(agent, cells, chosen_action)
     q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, layer, cells[chosen_action]['type'], next_pos_actions, 0.2, 0.6, rl_method, chosen_policy, future_carrying, next_pos_cells)
     print(q_table.table)
-    if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
-      pickup_or_dropoff(agent, cells[chosen_action]['type'])
     print('agent carrying', agent.carrying)
     if agent.type == 'm':
       world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, agent.type, agent.carrying, cells[chosen_action]['type'])
     else:
       world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, agent.type, agent.carrying, cells[chosen_action]['type'])
+    if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
+      pickup_or_dropoff(agent, cells[chosen_action]['type'])
     print('new environment:')
     for x in range(3):
       print(f'\nLevel {x}\n')

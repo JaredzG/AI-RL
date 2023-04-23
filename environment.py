@@ -92,10 +92,10 @@ class Environment:
     print('carrying ', carrying)
     match self.environment[new_coords[0]][new_coords[1]][new_coords[2]]['type']:
       case 'pickup':
-        if carrying:
+        if carrying == False:
           self.remove_pickup_block(new_coords)
       case 'dropoff':
-        if carrying == False:
+        if carrying:
           self.add_dropoff_block(new_coords)
       case 'normal':
         pass
