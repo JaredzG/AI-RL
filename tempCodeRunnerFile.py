@@ -1,4 +1,8 @@
-    # chosen_action = policy.pExploit(agent.carrying, cells, q_vals)
-    # print('chosen_action ', chosen_action)
-    # chosen_action = policy.pGreedy(agent.carrying, cells, q_vals)
-    # print('chosen_action ', chosen_action)
+  print('new environment:')
+  for x in range(3):
+    print(f'Level {x}\n')
+    for y in range(3):
+      print(f'Row {y}\n')
+      for z in range(3):
+        print(f'Column {z}\n')
+        print(world_state.environment[x][y][z], '\n')

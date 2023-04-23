@@ -1,17 +1,17 @@
 import random
-def pRandom(carrying, cells):
+def p_random(carrying, cells):
   for i in cells: 
-    if (cells[i]=="pickup" and not carrying) or (cells[i]=="dropoff" and carrying):
+    if (cells[i]['type']=="pickup" and carrying == False) or (cells[i]['type']=="dropoff" and carrying):
       return i
   position = random.randint(0, len(cells) - 1)
   action = (list(cells))[position]
   return action
     
-def pExploit(carrying, cells, q_vals):
+def p_exploit(carrying, cells, q_vals):
     max_q_val = float('-inf')
     max_action = ""
     for i in cells: 
-      if (cells[i]=="pickup" and not carrying) or (cells[i]=="dropoff" and carrying):
+      if (cells[i]['type']=="pickup" and carrying == False) or (cells[i]['type']=="dropoff" and carrying):
         return i
     for i in q_vals:
       if (q_vals[i] > max_q_val):
@@ -34,11 +34,11 @@ def pExploit(carrying, cells, q_vals):
       action_chosen = choice_made[0]
     return action_chosen
 
-def pGreedy(carrying, cells, q_vals):
+def p_greedy(carrying, cells, q_vals):
   max_q_val = float('-inf')
   max_action = ""
   for i in cells: 
-    if (cells[i]=="pickup" and not carrying) or (cells[i]=="dropoff" and carrying):
+    if (cells[i]['type']=="pickup" and carrying == False) or (cells[i]['type']=="dropoff" and carrying):
       return i
   for i in q_vals:
     if (q_vals[i] > max_q_val):

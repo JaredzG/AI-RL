@@ -53,19 +53,19 @@ class State:
   Need to update the environment and its state representation based on the move that the agent made.
   '''          
   def update_environment_and_state(self, old_coords, action, agent, carrying, new_position):
-    self.world_environment.move_agent(old_coords, action, agent)
+    self.world_environment.move_agent(old_coords, action, agent, carrying)
     if agent == 'm':
       self.set_male_position()
     else:
       self.set_female_position()
-    if (new_position == 'dropoff' and carrying) or (new_position == 'pickup' and not carrying):
+    if (new_position == 'dropoff' and carrying) or (new_position == 'pickup' and carrying == False):
       if agent == 'm':
         self.toggle_male_carrying()
       else:
         self.toggle_female_carrying()
     if new_position == 'dropoff' and carrying:
       self.set_dropoff_cell_blocks()
-    elif new_position == 'pickup' and not carrying:
+    elif new_position == 'pickup' and carrying == False:
       self.set_pickup_cell_blocks()
     self.set_state_environment()
 
@@ -76,6 +76,10 @@ def find_possible_cells(state, agent, actions):
     possible_cells = environment.get_cell_types(state.environment, state.representation['male_position']['coords'], actions)
   else:
     possible_cells = environment.get_cell_types(state.environment, state.representation['female_position']['coords'], actions)
+  return possible_cells
+
+def find_next_position_possible_cells(state, coords, actions):
+  possible_cells = environment.get_cell_types(state.environment, coords, actions)
   return possible_cells
 
 # def main():
