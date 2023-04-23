@@ -25,6 +25,11 @@ def p_exploit(carrying, cells, q_vals):
     for i in cells:
       if (max_actions.count(i) == 0):
         non_max_actions.append(i)
+        
+    if len(max_actions) == len(q_vals):
+      non_max_actions = max_actions
+    elif len(non_max_actions) == len(q_vals):
+      max_actions = non_max_actions
     
     actions = [{'list': 'max_actions'}, {'list': 'non_max_actions'}]
     weight = [0.80, 0.20]
