@@ -6,6 +6,23 @@ def p_random(carrying, cells):
   position = random.randint(0, len(cells) - 1)
   action = (list(cells))[position]
   return action
+
+def p_greedy(carrying, cells, q_vals):
+  max_q_val = float('-inf')
+  max_actions = []
+  for i in cells: 
+    if (cells[i]['type']=="pickup" and carrying == False) or (cells[i]['type']=="dropoff" and carrying):
+      return i
+  for i in q_vals:
+    if (q_vals[i] > max_q_val):
+      max_actions.clear()
+      max_q_val = q_vals[i]
+      max_actions.append(i)
+    elif (q_vals[i] == max_q_val):
+      max_actions.append(i)
+  position = random.randint(0, len(max_actions) - 1)
+  action_chosen = max_actions[position]
+  return action_chosen
     
 def p_exploit(carrying, cells, q_vals):
     max_q_val = float('-inf')
@@ -42,23 +59,6 @@ def p_exploit(carrying, cells, q_vals):
       position = random.randint(0, len(non_max_actions) - 1)
       action_chosen = non_max_actions[position]
     return action_chosen
-
-def p_greedy(carrying, cells, q_vals):
-  max_q_val = float('-inf')
-  max_actions = []
-  for i in cells: 
-    if (cells[i]['type']=="pickup" and carrying == False) or (cells[i]['type']=="dropoff" and carrying):
-      return i
-  for i in q_vals:
-    if (q_vals[i] > max_q_val):
-      max_actions.clear()
-      max_q_val = q_vals[i]
-      max_actions.append(i)
-    elif (q_vals[i] == max_q_val):
-      max_actions.append(i)
-  position = random.randint(0, len(max_actions) - 1)
-  action_chosen = max_actions[position]
-  return action_chosen
 
 # def main():
 #     cells = {'down': 'normal', 'left': 'normal', 'forward': 'normal', 'backward': 'normal'}

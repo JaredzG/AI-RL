@@ -7,16 +7,13 @@ import reward
 import value
 import qtable
 
-def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
+def run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
   for i in range(10000):
-    chosen_rl_method = ''
     chosen_policy = ''
     chosen_agent = None
     if i < 500:
-      chosen_rl_method = rl_method1
       chosen_policy = policy1
     else:
-      chosen_rl_method = rl_method2
       chosen_policy = policy2
     if i % 2 != 0:
       chosen_agent = m_agent
@@ -35,9 +32,9 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
     next_pos_actions = agent.set_next_position_possible_actions(world_state, chosen_agent.type, chosen_action)
     next_pos_cells = agent.set_next_position_possible_cells(world_state, cells[chosen_action]['coords'], next_pos_actions)
     future_carrying = False
-    if (chosen_rl_method == 'sarsa'):
+    if (rl_method == 'sarsa'):
       future_carrying = agent.determine_future_carrying(chosen_agent, cells, chosen_action)
-    q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, layer, cells[chosen_action]['type'], next_pos_actions, alpha, gamma, chosen_rl_method, chosen_policy, future_carrying, next_pos_cells)
+    q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, layer, cells[chosen_action]['type'], next_pos_actions, alpha, gamma, rl_method, chosen_policy, future_carrying, next_pos_cells)
     if chosen_agent.type == 'm':
       world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
     else:
@@ -68,8 +65,7 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
     
 
 def main():
-  rl_method1 = 'q_learning'
-  rl_method2 = 'sarsa'
+  rl_method = 'q_learning'
   policy1 = 'p_random'
   policy2 = 'p_exploit'
   env = environment.Environment()
@@ -77,10 +73,16 @@ def main():
   q_table = qtable.Qtable()
   m_agent = agent.Agent('m')
   f_agent = agent.Agent('f')
-  alpha = 0.3
+  alpha1 = 0.3
+  alpha2 = 0.1
+  alpha3 = 0.5
   gamma = 0.5
-  print('experiment 2 environment and q-table:')
-  run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma)
+  print('experiment 3 -- alpha = 0.3 -- environment and q-table:')
+  run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha1, gamma)
+  print('experiment 3 -- alpha = 0.1 -- environment and q-table:')
+  run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha2, gamma)
+  print('experiment 3 -- alpha = 0.2 -- environment and q-table:')
+  run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha3, gamma)
   
 if __name__ == "__main__" :
     main();
