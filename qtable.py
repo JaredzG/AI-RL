@@ -75,7 +75,6 @@ class Qtable:
     }
     
   def choose_new_q_val(self, old_q_val, action_reward, next_q_vals, rl_method, chosen_policy, carrying, next_pos_cells, alpha, gamma):
-    #print('rl_method ', rl_method)
     if rl_method == 'q_learning':
       return round(value.q_learning_value_function(old_q_val, action_reward, next_q_vals, alpha, gamma), 2)
     else:
@@ -94,24 +93,10 @@ class Qtable:
     action_reward = reward.get_reward(position)
     next_q_vals = self.find_q_vals(next_cell, next_actions, layer)
     new_q_val = self.choose_new_q_val(old_q_val, action_reward, next_q_vals, rl_method, policy, carrying, next_pos_cells, alpha, gamma)
-    #print('new_q_val ', new_q_val)
     self.table[layer][position][action] = new_q_val
-    #print('new_q_val in q_table ', self.table[layer][position][action])
-    
 
   def find_q_vals(self, position, actions, carrying):
-    #print("position ", position)
     q_vals = {}
     for direction in actions:
       q_vals[direction] = self.table[carrying][position][direction]
     return q_vals
-
-# def main():
-#     qtable = Qtable()
-#     actions = ["up", "down"]
-#     dict = {}
-#     dict = qtable.find_q_vals("normal", actions)
-#     print(dict)
-
-# if __name__ == "__main__" :
-#     main();

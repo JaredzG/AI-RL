@@ -1,10 +1,6 @@
 import environment
 import state
 import agent
-import policy
-import action
-import reward
-import value
 import qtable
 
 def run_exp1(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
@@ -63,7 +59,6 @@ def run_exp1(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_
         print('\t\t', action, q_table.table[layer][position][action])
   print()
     
-
 def main():
   rl_method = 'q_learning'
   policy1 = 'p_random'

@@ -1,5 +1,4 @@
 import environment
-
 class State:
   def __init__(self, world_environment):
     self.world_environment = world_environment
@@ -48,10 +47,7 @@ class State:
         for z in range(3):
           if self.environment[x][y][z]['type'] == 'dropoff':
             self.representation['dropoff_cell_blocks'][(x, y, z)] = self.environment[x][y][z]['block_count']
-            
-  '''
-  Need to update the environment and its state representation based on the move that the agent made.
-  '''          
+        
   def update_environment_and_state(self, old_coords, action, agent, carrying, new_position):
     self.world_environment.move_agent(old_coords, action, agent, carrying)
     if agent == 'm':
@@ -69,7 +65,6 @@ class State:
       self.set_pickup_cell_blocks()
     self.set_state_environment()
 
-              
 def find_possible_cells(state, agent, actions):
   possible_cells = {}
   if agent == 'm':
@@ -81,12 +76,3 @@ def find_possible_cells(state, agent, actions):
 def find_next_position_possible_cells(state, coords, actions):
   possible_cells = environment.get_cell_types(state.environment, coords, actions)
   return possible_cells
-
-# def main():
-#     env = environment.Environment()
-#     state = State(env.environment)
-#     cells = find_possible_cells(state, 'm', ['down', 'left', 'forward', 'backward'])
-#     print(cells)
-
-# if __name__ == "__main__" :
-#     main();

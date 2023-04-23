@@ -1,15 +1,3 @@
-# Environment module
-# Cells have these features:
-'''
-{'type': 'normal', 'reward': -1, 'occupied_by': ''}
-{'type': 'risky', 'reward': -2, 'occupied_by': ''}
-{'type': 'pickup', 'reward': +14, 'occupied_by': '', 'block_count': 10}
-{'type': 'dropoff', 'reward': +14, 'occupied_by': '', 'block_count': 0}
-'''
-
-'''
-Environment is sent to state, which is sent to agent. Agent makes move, changing the environment. Like a triangle cycle.
-'''
 class Environment:
   def __init__(self):
     first_level = [
@@ -150,11 +138,3 @@ def get_cell_types(environment, initial_position, actions):
       else:
         cells[action]['is_full'] = True
   return cells
-
-# def main():
-#     env = Environment()
-#     cells = get_cell_types(env, [0, 1, 1], ['up', 'left', 'right', 'forward', 'backward'])
-#     print(cells)
-
-# if __name__ == "__main__" :
-#     main();

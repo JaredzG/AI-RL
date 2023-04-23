@@ -59,13 +59,3 @@ def p_exploit(carrying, cells, q_vals):
       position = random.randint(0, len(non_max_actions) - 1)
       action_chosen = non_max_actions[position]
     return action_chosen
-
-# def main():
-#     cells = {'down': 'normal', 'left': 'normal', 'forward': 'normal', 'backward': 'normal'}
-#     q_vals = {'down': 3, 'left': 8, 'forward': 2, 'backward': 5}
-#     # print(pRandom(False,cells))
-#     # print(pExploit(False, cells, q_vals))
-#     print(pGreedy(False, cells, q_vals))
-
-# if __name__ == "__main__" :
-#     main()

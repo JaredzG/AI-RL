@@ -63,7 +63,6 @@ def run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_
         print('\t\t', action, q_table.table[layer][position][action])
   print()
     
-
 def main():
   rl_method = 'q_learning'
   policy1 = 'p_random'
