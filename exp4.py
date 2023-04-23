@@ -2,7 +2,6 @@ import environment
 import state
 import agent
 import qtable
-
 def run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
   num_terminal_states = 0
   for i in range(10000):

@@ -2,7 +2,6 @@ import environment
 import state
 import agent
 import qtable
-
 def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
   for i in range(10000):
     chosen_rl_method = ''
