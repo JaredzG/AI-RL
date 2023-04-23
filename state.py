@@ -1,13 +1,17 @@
 import environment
 
 class State:
-  def __init__(self, environment):
-    self.environment = environment
+  def __init__(self, world_environment):
+    self.world_environment = world_environment
     self.representation = {'male_position': {}, 'female_position': {}, 'male_carrying': False, 'female_carrying': False, 'pickup_cell_blocks': {}, 'dropoff_cell_blocks': {}}
+    self.set_state_environment()
     self.set_male_position()
     self.set_female_position()
-    self.set_pickup_cells_blocks()
+    self.set_pickup_cell_blocks()
     self.set_dropoff_cell_blocks()
+    
+  def set_state_environment(self):
+    self.environment = self.world_environment.environment
     
   def set_male_position(self):
     for x in range(3):
@@ -31,7 +35,7 @@ class State:
   def toggle_female_carrying(self):
     self.representation['female_carrying'] = not self.representation['female_carrying']
     
-  def set_pickup_cells_blocks(self):
+  def set_pickup_cell_blocks(self):
     for x in range(3):
       for y in range(3):
         for z in range(3):
@@ -44,6 +48,27 @@ class State:
         for z in range(3):
           if self.environment[x][y][z]['type'] == 'dropoff':
             self.representation['dropoff_cell_blocks'][(x, y, z)] = self.environment[x][y][z]['block_count']
+            
+  '''
+  Need to update the environment and its state representation based on the move that the agent made.
+  '''          
+  def update_environment_and_state(self, old_coords, action, agent, carrying, new_position):
+    self.world_environment.move_agent(old_coords, action, agent)
+    if agent == 'm':
+      self.set_male_position()
+    else:
+      self.set_female_position()
+    if (new_position == 'dropoff' and carrying) or (new_position == 'pickup' and not carrying):
+      if agent == 'm':
+        self.toggle_male_carrying()
+      else:
+        self.toggle_female_carrying()
+    if new_position == 'dropoff' and carrying:
+      self.set_dropoff_cell_blocks()
+    elif new_position == 'pickup' and not carrying:
+      self.set_pickup_cell_blocks()
+    self.set_state_environment()
+
               
 def find_possible_cells(state, agent, actions):
   possible_cells = {}

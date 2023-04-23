@@ -48,9 +48,14 @@ def set_possible_action_q_vals(state, agent, q_table, actions):
   else:
     return q_table.find_q_vals(state.representation['female_position']['cell_type'], actions)
     
+def pickup_or_dropoff(agent, position):
+  if (position == 'pickup' and agent.carrying == False) or (position == 'dropoff' and agent.carrying == True):
+    agent.toggle_carrying()
+    
 def main():
     env = environment.Environment()
-    world_state = state.State(env.environment)
+    #Initialize state with environment object
+    world_state = state.State(env)
     q_table = qtable.Qtable()
     agent = Agent('m')
     actions = set_possible_actions(world_state, agent.type)
@@ -69,7 +74,21 @@ def main():
     print('next_pos_actions ', next_pos_actions)
     q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, cells[chosen_action], next_pos_actions, 0.2, 0.6)
     print(q_table.table)
-    
+    if cells[chosen_action] == 'pickup' or cells[chosen_action] == 'dropoff':
+      pickup_or_dropoff(agent, cells[chosen_action])
+    print('agent carrying', agent.carrying)
+    if agent.type == 'm':
+      world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, agent.type, agent.carrying, cells[chosen_action])
+    else:
+      world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, agent.type, agent.carrying, cells[chosen_action])
+    print('new environment:')
+    for x in range(3):
+      print(f'Level {x}\n')
+      for y in range(3):
+        print(f'Row {y}\n')
+        for z in range(3):
+          print(f'Column {z}\n')
+          print(world_state.environment[x][y][z], '\n')
 
 if __name__ == "__main__" :
     main();
