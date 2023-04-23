@@ -66,6 +66,7 @@ class Environment:
     self.environment = [first_level, second_level, third_level]
     
   def move_agent(self, old_coords, action, agent, carrying):
+    print('move agent: old_coords ', old_coords, 'action ', action)
     self.environment[old_coords[0]][old_coords[1]][old_coords[2]]['occupied_by'] = ''
     new_coords = []
     match action:
@@ -75,10 +76,10 @@ class Environment:
       case 'down':
         self.environment[old_coords[0] - 1][old_coords[1]][old_coords[2]]['occupied_by'] = agent
         new_coords = [old_coords[0] - 1, old_coords[1], old_coords[2]]
-      case 'forward':
+      case 'backward':
         self.environment[old_coords[0]][old_coords[1] + 1][old_coords[2]]['occupied_by'] = agent
         new_coords = [old_coords[0], old_coords[1] + 1, old_coords[2]]
-      case 'backward':
+      case 'forward':
         self.environment[old_coords[0]][old_coords[1] - 1][old_coords[2]]['occupied_by'] = agent
         new_coords = [old_coords[0], old_coords[1] - 1, old_coords[2]]
       case 'right':
