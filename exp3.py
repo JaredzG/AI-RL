@@ -78,7 +78,7 @@ def main():
   run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha1, gamma)
   print('experiment 3 -- alpha = 0.1 -- environment and q-table:')
   run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha2, gamma)
-  print('experiment 3 -- alpha = 0.2 -- environment and q-table:')
+  print('experiment 3 -- alpha = 0.5 -- environment and q-table:')
   run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha3, gamma)
   
 if __name__ == "__main__" :

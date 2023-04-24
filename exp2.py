@@ -109,7 +109,7 @@ def main():
   f_agent = agent.Agent('f')
   alpha = 0.3
   gamma = 0.5
-  print('experiment 2 environment and q-table:')
+  print('experiment 2 environment and q-tables:')
   run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma)
   
 if __name__ == "__main__" :

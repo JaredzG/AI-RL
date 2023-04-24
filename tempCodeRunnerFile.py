@@ -1,14 +1,8 @@
- # if cells[chosen_action]['type'] == 'pickup' and world_state.representation['pickup_cell_blocks'][tuple(cells[chosen_action]['coords'])] > 0:
-    #   if chosen_agent.type == 'm':
-    #     if world_state.representation['male_carrying'] == False:
-    #       blocks_picked_up += 1
-    #   else:
-    #     if world_state.representation['female_carrying'] == False:
-    #       blocks_picked_up += 1
-    # if cells[chosen_action]['type'] == 'dropoff' and world_state.representation['dropoff_cell_blocks'][tuple(cells[chosen_action]['coords'])] > 0:
-    #   if chosen_agent.type == 'm':
-    #     if world_state.representation['male_carrying'] == True:
-    #       blocks_picked_up += 1
-    #   else:
-    #     if world_state.representation['female_carrying'] == True:
-    #       blocks_picked_up += 1
+picked_up_or_dropped_off = False
+    if chosen_agent.type == 'm':
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+    else:
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+    if picked_up_or_dropped_off:
+      if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
+        agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
