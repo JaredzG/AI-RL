@@ -58,19 +58,19 @@ def run_exp3(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_
         env.environment[0][2][0] = {'type': 'normal', 'occupied_by': ''}
       world_state = state.State(env)
         
-  for x in range(3):
-    print('Level', x)
-    for y in range(3):
-      print('\tRow', y)
-      for z in range(3):
-        print('\t\tColumn', z, world_state.environment[x][y][z])
+  print('final environment')
+  for x in range(2, -1, -1):
+    print('Level', x + 1)
+    for y in range(2, -1, -1):
+      print('{:^60}'.format(str(world_state.environment[x][y][0])), '{:^60}'.format(str(world_state.environment[x][y][1])), '{:^60}'.format(str(world_state.environment[x][y][2])))
   print()
+  print('final q-table')
   for layer in ['carrying', 'not_carrying']:
     print(layer)
+    print('{:^10}'.format(' '), '{:^15}'.format('up'), '{:^15}'.format('down'), '{:^15}'.format('left'), '{:^15}'.format('right'), '{:^15}'.format('forward'), '{:^15}'.format('backward'))
     for position in ['normal', 'risky', 'pickup', 'dropoff']:
-      print('\t', position)
-      for action in ['up', 'down', 'left', 'right', 'forward', 'backward']:
-        print('\t\t', action, q_table.table[layer][position][action])
+      print('{:^10}'.format(position), '{:^15}'.format(q_table.table[layer][position]['up']), '{:^15}'.format(q_table.table[layer][position]['down']), '{:^15}'.format(q_table.table[layer][position]['left']), '{:^15}'.format(q_table.table[layer][position]['right']), '{:^15}'.format(q_table.table[layer][position]['forward']), '{:^15}'.format(q_table.table[layer][position]['backward']))
+    print()
   print()
 
 def main():

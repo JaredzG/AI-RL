@@ -54,7 +54,6 @@ class Environment:
     self.environment = [first_level, second_level, third_level]
     
   def move_agent(self, old_coords, action, agent, carrying):
-    #print('move agent: old_coords ', old_coords, 'action ', action)
     self.environment[old_coords[0]][old_coords[1]][old_coords[2]]['occupied_by'] = ''
     new_coords = []
     match action:
@@ -76,8 +75,6 @@ class Environment:
       case 'left':
         self.environment[old_coords[0]][old_coords[1]][old_coords[2] - 1]['occupied_by'] = agent
         new_coords = [old_coords[0], old_coords[1], old_coords[2] - 1]
-    #print('new_cell_type ', self.environment[new_coords[0]][new_coords[1]][new_coords[2]]['type'])
-    #print('carrying ', carrying)
     match self.environment[new_coords[0]][new_coords[1]][new_coords[2]]['type']:
       case 'pickup':
         if carrying == False:

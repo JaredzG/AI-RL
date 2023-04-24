@@ -3,6 +3,8 @@ import state
 import agent
 import qtable
 def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table, m_agent, f_agent, alpha, gamma):
+  first_dropoff_cell_filled = False
+  first_terminal_state_reached = False
   for i in range(10000):
     chosen_rl_method = ''
     chosen_policy = ''
@@ -39,26 +41,53 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
       world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
     if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
       agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
+      
+    if first_dropoff_cell_filled == False:
+      for cell in world_state.representation['dropoff_cell_blocks']:
+        if world_state.representation['dropoff_cell_blocks'][cell] == 5:
+          first_dropoff_cell_filled = True
+          print('first dropoff cell filled', cell)
+          print('q_table:')
+          for layer in ['carrying', 'not_carrying']:
+            print(layer)
+            print('{:^10}'.format(' '), '{:^15}'.format('up'), '{:^15}'.format('down'), '{:^15}'.format('left'), '{:^15}'.format('right'), '{:^15}'.format('forward'), '{:^15}'.format('backward'))
+            for position in ['normal', 'risky', 'pickup', 'dropoff']:
+              print('{:^10}'.format(position), '{:^15}'.format(q_table.table[layer][position]['up']), '{:^15}'.format(q_table.table[layer][position]['down']), '{:^15}'.format(q_table.table[layer][position]['left']), '{:^15}'.format(q_table.table[layer][position]['right']), '{:^15}'.format(q_table.table[layer][position]['forward']), '{:^15}'.format(q_table.table[layer][position]['backward']))
+            print()
+          print()
+          break
+        
     terminal_state_reached = True
     for cell in world_state.representation['dropoff_cell_blocks']:
       if world_state.representation['dropoff_cell_blocks'][cell] < 5:
         terminal_state_reached = False
     if terminal_state_reached:
+      if first_terminal_state_reached == False:
+        first_terminal_state_reached = True
+        print('first terminal state reached')
+        print('q_table:')
+        for layer in ['carrying', 'not_carrying']:
+          print(layer)
+          print('{:^10}'.format(' '), '{:^15}'.format('up'), '{:^15}'.format('down'), '{:^15}'.format('left'), '{:^15}'.format('right'), '{:^15}'.format('forward'), '{:^15}'.format('backward'))
+          for position in ['normal', 'risky', 'pickup', 'dropoff']:
+            print('{:^10}'.format(position), '{:^15}'.format(q_table.table[layer][position]['up']), '{:^15}'.format(q_table.table[layer][position]['down']), '{:^15}'.format(q_table.table[layer][position]['left']), '{:^15}'.format(q_table.table[layer][position]['right']), '{:^15}'.format(q_table.table[layer][position]['forward']), '{:^15}'.format(q_table.table[layer][position]['backward']))
+          print()
+        print()
       env = environment.Environment()
       world_state = state.State(env)
-  for x in range(3):
-    print('Level', x)
-    for y in range(3):
-      print('\tRow', y)
-      for z in range(3):
-        print('\t\tColumn', z, world_state.environment[x][y][z])
+  print('final environment')
+  for x in range(2, -1, -1):
+    print('Level', x + 1)
+    for y in range(2, -1, -1):
+      print('{:^60}'.format(str(world_state.environment[x][y][0])), '{:^60}'.format(str(world_state.environment[x][y][1])), '{:^60}'.format(str(world_state.environment[x][y][2])))
   print()
+  print('final q-table')
   for layer in ['carrying', 'not_carrying']:
     print(layer)
+    print('{:^10}'.format(' '), '{:^15}'.format('up'), '{:^15}'.format('down'), '{:^15}'.format('left'), '{:^15}'.format('right'), '{:^15}'.format('forward'), '{:^15}'.format('backward'))
     for position in ['normal', 'risky', 'pickup', 'dropoff']:
-      print('\t', position)
-      for action in ['up', 'down', 'left', 'right', 'forward', 'backward']:
-        print('\t\t', action, q_table.table[layer][position][action])
+      print('{:^10}'.format(position), '{:^15}'.format(q_table.table[layer][position]['up']), '{:^15}'.format(q_table.table[layer][position]['down']), '{:^15}'.format(q_table.table[layer][position]['left']), '{:^15}'.format(q_table.table[layer][position]['right']), '{:^15}'.format(q_table.table[layer][position]['forward']), '{:^15}'.format(q_table.table[layer][position]['backward']))
+    print()
   print()
 
 def main():
