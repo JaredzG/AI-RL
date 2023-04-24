@@ -30,12 +30,17 @@ def run_exp1(rl_method, policy1, policy2, env, world_state, q_table, m_agent, f_
     if (rl_method == 'sarsa'):
       future_carrying = agent.determine_future_carrying(chosen_agent, cells, chosen_action)
     q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, layer, cells[chosen_action]['type'], next_pos_actions, alpha, gamma, rl_method, chosen_policy, future_carrying, next_pos_cells)
+    picked_up_or_dropped_off = False
     if chosen_agent.type == 'm':
-      world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
     else:
-      world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+    if picked_up_or_dropped_off:
+      if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
+        agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
     if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
       agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
+      
     terminal_state_reached = True
     for cell in world_state.representation['dropoff_cell_blocks']:
       if world_state.representation['dropoff_cell_blocks'][cell] < 5:
