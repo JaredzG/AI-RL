@@ -9,6 +9,7 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
     chosen_rl_method = ''
     chosen_policy = ''
     chosen_agent = None
+    non_chosen_agent = None
     if i < 500:
       chosen_rl_method = rl_method1
       chosen_policy = policy1
@@ -17,8 +18,10 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
       chosen_policy = policy2
     if i % 2 != 0:
       chosen_agent = m_agent
+      non_chosen_agent = f_agent
     else:
       chosen_agent = f_agent
+      non_chosen_agent = m_agent
     layer = ''
     match chosen_agent.carrying:
       case True:
@@ -35,12 +38,14 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
     if (chosen_rl_method == 'sarsa'):
       future_carrying = agent.determine_future_carrying(chosen_agent, cells, chosen_action)
     q_table.update_qtable(world_state.representation['male_position']['cell_type'], chosen_action, layer, cells[chosen_action]['type'], next_pos_actions, alpha, gamma, chosen_rl_method, chosen_policy, future_carrying, next_pos_cells)
+    picked_up_or_dropped_off = False
     if chosen_agent.type == 'm':
-      world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['male_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
     else:
-      world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
-    if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
-      agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
+      picked_up_or_dropped_off = world_state.update_environment_and_state(world_state.representation['female_position']['coords'], chosen_action, chosen_agent.type, chosen_agent.carrying, cells[chosen_action]['type'])
+    if picked_up_or_dropped_off:
+      if cells[chosen_action]['type'] == 'pickup' or cells[chosen_action]['type'] == 'dropoff':
+        agent.pickup_or_dropoff(chosen_agent, cells[chosen_action]['type'])
       
     if first_dropoff_cell_filled == False:
       for cell in world_state.representation['dropoff_cell_blocks']:
@@ -76,6 +81,8 @@ def run_exp2(rl_method1, rl_method2, policy1, policy2, env, world_state, q_table
       env = environment.Environment()
       world_state = state.State(env)
   print('final environment')
+  print(chosen_agent.type, 'is carrying: ', chosen_agent.carrying)
+  print(non_chosen_agent.type, 'is carrying: ', non_chosen_agent.carrying)
   for x in range(2, -1, -1):
     print('Level', x + 1)
     for y in range(2, -1, -1):

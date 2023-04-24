@@ -49,21 +49,22 @@ class State:
             self.representation['dropoff_cell_blocks'][(x, y, z)] = self.environment[x][y][z]['block_count']
         
   def update_environment_and_state(self, old_coords, action, agent, carrying, new_position):
-    self.world_environment.move_agent(old_coords, action, agent, carrying)
+    picked_up_or_dropped_off = self.world_environment.move_agent(old_coords, action, agent, carrying)
     if agent == 'm':
       self.set_male_position()
     else:
       self.set_female_position()
-    if (new_position == 'dropoff' and carrying) or (new_position == 'pickup' and carrying == False):
-      if agent == 'm':
-        self.toggle_male_carrying()
+    if picked_up_or_dropped_off:
+      if new_position == 'pickup' and carrying == False:
+        self.set_pickup_cell_blocks()
       else:
-        self.toggle_female_carrying()
-    if new_position == 'dropoff' and carrying:
-      self.set_dropoff_cell_blocks()
-    elif new_position == 'pickup' and carrying == False:
-      self.set_pickup_cell_blocks()
+        self.set_dropoff_cell_blocks()
+      if agent == 'm':
+        self.toggle_male_carrying
+      else:
+        self.toggle_female_carrying
     self.set_state_environment()
+    return picked_up_or_dropped_off
 
 def find_possible_cells(state, agent, actions):
   possible_cells = {}

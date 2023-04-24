@@ -78,22 +78,26 @@ class Environment:
     match self.environment[new_coords[0]][new_coords[1]][new_coords[2]]['type']:
       case 'pickup':
         if carrying == False:
-          self.remove_pickup_block(new_coords)
+          return self.remove_pickup_block(new_coords)
       case 'dropoff':
         if carrying:
-          self.add_dropoff_block(new_coords)
+          return self.add_dropoff_block(new_coords)
       case 'normal':
-        pass
+        return False
       case 'risky':
-        pass
+        return False
         
   def remove_pickup_block(self, coords):
     if(self.environment[coords[0]][coords[1]][coords[2]]['block_count'] > 0):
       self.environment[coords[0]][coords[1]][coords[2]]['block_count'] -= 1
+      return True
+    return False
       
   def add_dropoff_block(self, coords):
     if(self.environment[coords[0]][coords[1]][coords[2]]['block_count'] < 5):
       self.environment[coords[0]][coords[1]][coords[2]]['block_count'] += 1
+      return True
+    return False
       
 def get_cell_types(environment, initial_position, actions):
   cells = {}
